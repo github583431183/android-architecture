@@ -46,12 +46,26 @@ public class TaskDetailFragment extends Fragment {
 
     private TaskDetailViewModel mViewModel;
 
-    public static TaskDetailFragment newInstance(String taskId) {
-        Bundle arguments = new Bundle();
-        arguments.putString(ARGUMENT_TASK_ID, taskId);
-        TaskDetailFragment fragment = new TaskDetailFragment();
-        fragment.setArguments(arguments);
-        return fragment;
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.taskdetail_frag, container, false);
+
+        TaskdetailFragBinding viewDataBinding = TaskdetailFragBinding.bind(view);
+
+        mViewModel = TaskDetailActivity.obtainViewModel(getActivity());
+
+        viewDataBinding.setViewmodel(mViewModel);
+
+        TaskDetailUserActionsListener actionsListener = getTaskDetailUserActionsListener();
+
+        viewDataBinding.setListener(actionsListener);
+
+        setHasOptionsMenu(true);
+
+        return view;
     }
 
     @Override
@@ -61,6 +75,20 @@ public class TaskDetailFragment extends Fragment {
         setupFab();
 
         setupSnackbar();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.start(getArguments().getString(ARGUMENT_TASK_ID));
+    }
+
+    public static TaskDetailFragment newInstance(String taskId) {
+        Bundle arguments = new Bundle();
+        arguments.putString(ARGUMENT_TASK_ID, taskId);
+        TaskDetailFragment fragment = new TaskDetailFragment();
+        fragment.setArguments(arguments);
+        return fragment;
     }
 
     private void setupSnackbar() {
@@ -83,34 +111,6 @@ public class TaskDetailFragment extends Fragment {
                 mViewModel.editTask();
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mViewModel.start(getArguments().getString(ARGUMENT_TASK_ID));
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.taskdetail_frag, container, false);
-
-        TaskdetailFragBinding viewDataBinding = TaskdetailFragBinding.bind(view);
-
-        mViewModel = TaskDetailActivity.obtainViewModel(getActivity());
-
-        viewDataBinding.setViewmodel(mViewModel);
-
-        TaskDetailUserActionsListener actionsListener = getTaskDetailUserActionsListener();
-
-        viewDataBinding.setListener(actionsListener);
-
-        setHasOptionsMenu(true);
-
-        return view;
     }
 
     private TaskDetailUserActionsListener getTaskDetailUserActionsListener() {

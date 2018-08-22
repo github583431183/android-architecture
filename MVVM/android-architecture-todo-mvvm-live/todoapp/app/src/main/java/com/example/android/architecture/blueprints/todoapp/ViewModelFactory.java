@@ -49,6 +49,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
                 if (INSTANCE == null) {
                     INSTANCE = new ViewModelFactory(
                             application,
+                            //数据
                             Injection.provideTasksRepository(
                                     application.getApplicationContext()));
                 }

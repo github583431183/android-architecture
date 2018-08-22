@@ -92,6 +92,7 @@ public class TasksAdapter extends BaseAdapter {
 
         binding.setListener(userActionsListener);
 
+        // variable 改变后调用
         binding.executePendingBindings();
         return binding.getRoot();
     }

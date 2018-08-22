@@ -17,13 +17,13 @@
 package com.example.android.architecture.blueprints.todoapp;
 
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.View;
 
 /**
  * Extends {@link SwipeRefreshLayout} to support non-direct descendant scrolling views.
+ * 扩展{@link SwipeRefreshLayout}以支持非直接后代滚动视图。
  * <p>
  * {@link SwipeRefreshLayout} works as expected when a scroll view is a direct child: it triggers
  * the refresh only when the view is on top. This class adds a way (@link #setScrollUpChild} to

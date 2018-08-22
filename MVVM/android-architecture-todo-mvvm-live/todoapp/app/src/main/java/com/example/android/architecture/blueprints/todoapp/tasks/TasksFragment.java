@@ -51,20 +51,6 @@ public class TasksFragment extends Fragment {
 
     private TasksAdapter mListAdapter;
 
-    public TasksFragment() {
-        // Requires empty public constructor
-    }
-
-    public static TasksFragment newInstance() {
-        return new TasksFragment();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mTasksViewModel.start();
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +64,33 @@ public class TasksFragment extends Fragment {
         setHasOptionsMenu(true);
 
         return mTasksFragBinding.getRoot();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        setupSnackbar();
+
+        setupFab();
+
+        setupListAdapter();
+
+        setupRefreshLayout();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTasksViewModel.start();
+    }
+
+    public TasksFragment() {
+        // Requires empty public constructor
+    }
+
+    public static TasksFragment newInstance() {
+        return new TasksFragment();
     }
 
     @Override
@@ -99,19 +112,6 @@ public class TasksFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.tasks_fragment_menu, menu);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        setupSnackbar();
-
-        setupFab();
-
-        setupListAdapter();
-
-        setupRefreshLayout();
     }
 
     private void setupSnackbar() {
@@ -162,7 +162,7 @@ public class TasksFragment extends Fragment {
     }
 
     private void setupListAdapter() {
-        ListView listView =  mTasksFragBinding.tasksList;
+        ListView listView = mTasksFragBinding.tasksList;
 
         mListAdapter = new TasksAdapter(
                 new ArrayList<Task>(0),
@@ -172,7 +172,7 @@ public class TasksFragment extends Fragment {
     }
 
     private void setupRefreshLayout() {
-        ListView listView =  mTasksFragBinding.tasksList;
+        ListView listView = mTasksFragBinding.tasksList;
         final ScrollChildSwipeRefreshLayout swipeRefreshLayout = mTasksFragBinding.refreshLayout;
         swipeRefreshLayout.setColorSchemeColors(
                 ContextCompat.getColor(getActivity(), R.color.colorPrimary),

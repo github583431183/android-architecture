@@ -45,6 +45,7 @@ public class SingleLiveEvent<T> extends MutableLiveData<T> {
     public void observe(LifecycleOwner owner, final Observer<T> observer) {
 
         if (hasActiveObservers()) {
+            //多个观察者注册，但只有一个会被通知更改。
             Log.w(TAG, "Multiple observers registered but only one will be notified of changes.");
         }
 

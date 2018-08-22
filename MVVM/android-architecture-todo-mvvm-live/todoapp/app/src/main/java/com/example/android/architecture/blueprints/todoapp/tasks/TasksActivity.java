@@ -28,6 +28,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.android.architecture.blueprints.todoapp.R;
@@ -57,15 +58,18 @@ public class TasksActivity extends AppCompatActivity implements TaskItemNavigato
 
         mViewModel = obtainViewModel(this);
 
-        // Subscribe to "open task" event
+        // Subscribe to "open task" event  fragment -> 过来的数据
         mViewModel.getOpenTaskEvent().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String taskId) {
+                Log.i("wjz","taskId:"+taskId);
+
                 if (taskId != null) {
                     openTaskDetails(taskId);
                 }
             }
         });
+
 
         // Subscribe to "new task" event
         mViewModel.getNewTaskEvent().observe(this, new Observer<Void>() {
